@@ -2,36 +2,44 @@
 <html>
     <head>
         <title>Flack</title>
-
         <!-- Socket.io -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-
-        <script src="{{ url_for('static', filename='chat.js') }}" type="text/javascript" charset="utf-8"></script>
-
+        <!-- Client Side Validation -->
+        <script src="{{ url_for('static', filename='validation.js') }}" type="text/javascript" charset="utf-8"></script>
+        <!-- Socket.io implementation  -->
         <script src="{{ url_for('static', filename='index.js') }}" type="text/javascript" charset="utf-8"></script>
+        <!-- Handle a browser with JS disabled -->
+        <noscript>
+            <style type="text/css">
+                main {display:none;}
+            </style>
+            <h1>In order to provide the best experience possible, we encourage you to activate JavaScript in your browser. Unfortunately, Flack cannot be experienced without JavaScript. </h1>
+        </noscript>
     </head>
     <body>
-        <h2 class="username"></h2>
-        <!-- List of Rooms -->
-        <h1>Room List</h1>
-        <ul id="room_list">
-            {% for room in rooms %}
-                <p class="room">{{ room|title }}</p>
-            {% endfor %}
-        </ul>
-        <!-- Room Creation form -->
-        <h1>Create New Channel</h1>
-        <input autocomplete="off" type="text" name="new_room" id="new_room" placeholder="Channel Name">
-        <button id="add_room" type="button">ADD</button>
-        <!-- Messages -->
-        <div style="width: 100%; height: 300px; border: 1px solid black; margin-top: 10px;">
-            <h1 id="room_name"></h1>
-            <div id="display-messages-section">
+        <main>
+            <h2 class="username"></h2>
+            <!-- List of Rooms -->
+            <h1>Room List</h1>
+            <ul id="room_list">
+                {% for room in rooms %}
+                    <p class="room">{{ room|title }}</p>
+                {% endfor %}
+            </ul>
+            <!-- Room Creation form -->
+            <h1>Create New Channel</h1>
+            <input autocomplete="off" type="text" name="new_room" id="new_room" placeholder="Channel Name">
+            <button id="add_room" type="button">ADD</button>
+            <!-- Messages -->
+            <div style="width: 100%; height: 300px; border: 1px solid black; margin-top: 10px;">
+                <h1 id="room_name"></h1>
+                <div id="display-messages-section">
+                </div>
+                <div id="input-area">
+                    <input type="text" id="message" placeholder="Type here..." autocomplete="off">
+                    <button type="button" id="send_message">SEND</button> 
+                </div>
             </div>
-            <div id="input-area">
-                <input type="text" id="message" placeholder="Type here..." autocomplete="off">
-                <button type="button" id="send_message">SEND</button> 
-            </div>
-        </div>
+        </main>
     </body>
 </html>

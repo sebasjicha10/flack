@@ -9,11 +9,13 @@
     </head>
     
     <body>
-        <h1>Provide username</h1>
+        <h1>Provide a Name</h1>
         <!-- Sign in form -->
-        <form id="siginForm" method="post">
-            <input autocomplete="off" type="text" name="username" id="username" placeholder="Username">
-            <button type="submit">Submit</button>
+        <form action="/signin" id="siginForm" method="post">
+            <input autocomplete="off" type="text" name="name" id="username" placeholder="Username">
+            <button id="singinSubmitButton" type="submit">Submit</button>
         </form>
+        <!-- MAKE APPEAR WITH JS WHEN USER > 25 chars -->
+        <p>25 character limit</p>
     </body>
 </html>

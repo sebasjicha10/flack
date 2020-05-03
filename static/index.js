@@ -1,12 +1,11 @@
 // Redirect user if it hasn't previously provide a username
-if (!localStorage.getItem('username')) {
+if (!localStorage.getItem('username')) 
     window.location.href = "/signin"
-}
 
 
 // Global variables
 const username = localStorage.getItem('username')
-let room = ""
+let current_room = localStorage.getItem('current_room') || ""
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,20 +15,67 @@ document.addEventListener('DOMContentLoaded', () => {
         element.innerHTML = username
     })
 
-    // enter key submit message
-    let msg = document.querySelector("#message")
-    msg.addEventListener("keyup", event => {
-        event.preventDefault()
-        if (event.keyCode === 13) {
-            document.querySelector("#send_message").click()
-        }
-    })
-
     // Connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
+    // Connect to last room opened
+    socket.on('connect', function() {
+        if (current_room.length > 0)
+            joinRoom(current_room) 
+    });
+
     // Display incoming messages
-    socket.on('message', data => {
+    socket.on('message', data => sendMessage(data))
+
+    // Send message
+    document.querySelector("#send_message").onclick = () => {
+        time = new Date().toLocaleTimeString()
+        const promptedMessage = document.querySelector("#message")
+        socket.send({ "msg": promptedMessage.value, "username": username, "room": current_room, "time": time })
+        // Clear input area
+        promptedMessage.value = ""
+    }
+
+    // Room creation
+    document.querySelector("#add_room").onclick = () => {
+        const given_room = document.querySelector("#new_room").value
+        socket.emit("create", given_room)
+        // Clear input area
+        document.querySelector("#new_room").value = ""
+    }
+
+    // Handles the onClick of the Rooms List
+    const handleRoomClick = p => {
+        p.onclick = () => {
+            let newRoom = p.innerHTML
+            if (newRoom == current_room) {
+                msg = `You are already in ${current_room} room.`
+                printSysMsg(msg)
+            } else {
+                leaveRoom(current_room)
+                joinRoom(newRoom)
+                current_room = newRoom
+            }
+        }
+    }
+
+    // Room selection
+    document.querySelectorAll(".room").forEach(p => handleRoomClick(p))
+
+    // Add room to the DOM
+    socket.on("room added", new_room => {
+        const p = document.createElement('p')
+        p.innerHTML = new_room
+        p.className = "room"
+        handleRoomClick(p)
+        document.querySelector("#room_list").append(p)
+    })
+
+    // Join user after room creation
+    socket.on("room creator", room => joinRoom(room))
+
+    // Handles the printing of messages when they come from server-side
+    const sendMessage = data => {
         const p = document.createElement('p')
         const span_user = document.createElement('span') 
         const span_time = document.createElement('span') 
@@ -38,55 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
         span_time.innerHTML = data.time
         p.innerHTML = span_user.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_time.outerHTML
         document.querySelector("#display-messages-section").append(p)
-    })
-
-    // Send message
-    document.querySelector("#send_message").onclick = () => {
-        time = new Date().toLocaleTimeString()
-        socket.send({ "msg": document.querySelector("#message").value, "username": username, "room": room, "time": time })
-        // Clear input area
-        document.querySelector("#message").value = ""
     }
 
-    // Room creation
-    document.querySelector("#add_room").onclick = () => {
-        const new_room = document.querySelector("#new_room").value
-        socket.emit("create", {"new_room": new_room})
-    }
-
-    // Room selection
-    document.querySelectorAll(".room").forEach(p => {
-        p.onclick = () => {
-            let newRoom = p.innerHTML
-            if (newRoom == room) {
-                msg = `You are already in ${room} room.`
-                printSysMsg(msg)
-            } else {
-                leaveRoom(room)
-                joinRoom(newRoom)
-                room = newRoom
-            }
-        }
-    })
-
-    // Add room to the DOM
-    socket.on("channel added", data => {
-        const new_room = data
-        const p = document.createElement('p')
-        p.innerHTML = new_room
-        p.className = "room"
-        p.onclick = () => {
-            let newRoom = p.innerHTML
-            if (newRoom == room) {
-                msg = `You are already in ${room} room.`
-                printSysMsg(msg)
-            } else {
-                leaveRoom(room)
-                joinRoom(newRoom)
-                room = newRoom
-            }
-        }
-        document.querySelector("#room_list").append(p)
+    // Print all messages registered in the room 
+    socket.on("saved messages", data => {
+        data.forEach(message => sendMessage(message))
     })
 
     // Leave room
@@ -96,13 +98,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Join room
     const joinRoom = room => {
+
+        // Fetch messages
+        socket.emit("fetch messages", room)
+
         socket.emit("join", {"username": username, "room": room})
+
+        // Set localStorage room 
+        localStorage.setItem('current_room', room)
+
         // Clear message area
         document.querySelector("#display-messages-section").innerHTML = ""
+
         // Autofucs on text area
         document.querySelector("#message").focus()
+
         // Change Room name
         document.querySelector("#room_name").innerHTML = room
+
     }
 
     // Print system message
