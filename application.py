@@ -54,9 +54,13 @@ def signin():
 def message(data):
     """Send messages to the Client-Side"""
 
+    print(data)
+
     # Store message
     room_name = data["room"]
     msg = data["msg"].strip()
+
+    print(data)
 
     # Make sure something was typed
     if msg == "":
@@ -71,7 +75,7 @@ def message(data):
                 messages.remove(messages[0])
 
             messages.append(data)
-    
+            
     # Signal client side 
     send(data, room=room_name)
 
@@ -95,7 +99,7 @@ def create(room):
     new_room = {"room": given_room, "messages": []}
     ROOMS.append(new_room)
     emit("room added", given_room, broadcast=True)
-
+    
     # Join in the room creator
     emit("room creator", given_room)
     
@@ -123,7 +127,8 @@ def leave(data):
 
     # Leave and signal client side
     leave_room(room)
-    send({"msg": username + " has left the " + room + " room."}, room=room)
+    send({"msg": username + " has left the " + room + " room."}, 
+    room=room)
 
 
 @socketio.on("fetch messages")

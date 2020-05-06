@@ -1,0 +1,48 @@
+/* Variables */
+$flack_green: #41B3A3;
+$flack_red: #E27D60;
+
+body {
+    width: 100vw;
+    height: 100vh;
+    border: 1px solid green;
+    .containter-fluid {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        border: 1px solid red;
+    }
+    #flack-logo-green {
+        width: 20%;
+        margin: 8vh 0;
+    }
+    #provide-name {
+        font-size: 2vw;
+        color: $flack_green;
+        margin-bottom: 30px;
+    }
+    #siginForm {
+        #username {
+            border: 2px solid $flack_green;
+            width: 30%;
+            border-radius: 25px;
+            padding: 3px 10px;
+        }
+        #char-limit {
+            visibility: hidden;
+            color: red;
+            font-size: 14px;
+
+        }
+        #singinSubmitButton {
+            margin-top: 35px;
+            background-color: white;
+            border: none;
+            color: $flack_red;
+            font-size: 1.8vw;
+        }
+        #singinSubmitButton:hover {
+            opacity: 0.8;
+        }
+    }
+}

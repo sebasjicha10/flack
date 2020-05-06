@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("username")) 
         window.location.href = "/"
     
-
     // Handle Name Validation (Must be between 1 and 25 chars)
     const signInButton = document.querySelector("#singinSubmitButton")
     const nameInput = document.querySelector("#username")
@@ -12,9 +11,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     nameInput.onkeyup = () => {
         const givenName = nameInput.value.trim()
-        givenName.length > 0 ? 
+        const charLimit = document.querySelector("#char-limit")
+        givenName.length > 0 && givenName.length < 25 ? 
             signInButton.disabled = false :
             signInButton.disabled = true
+        
+        givenName.length > 25 ?
+            charLimit.style.visibility = "initial" :
+            charLimit.style.visibility = "hidden" 
+
     };
 
     // Handle Submission

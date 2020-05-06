@@ -1,3 +1,5 @@
+import validation from "./validation.js"
+
 // Redirect user if it hasn't previously provide a username
 if (!localStorage.getItem('username')) 
     window.location.href = "/signin"
@@ -9,6 +11,9 @@ let current_room = localStorage.getItem('current_room') || ""
 
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Messages and Room input Validation + Handle pressing Enter
+    validation()
 
     // Attach username to page
     document.querySelectorAll('.username').forEach(element => {
@@ -22,14 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.on('connect', function() {
         if (current_room.length > 0)
             joinRoom(current_room) 
-    });
+    })
 
     // Display incoming messages
     socket.on('message', data => sendMessage(data))
 
     // Send message
     document.querySelector("#send_message").onclick = () => {
-        time = new Date().toLocaleTimeString()
+        const time = new Date().toLocaleTimeString()
         const promptedMessage = document.querySelector("#message")
         socket.send({ "msg": promptedMessage.value, "username": username, "room": current_room, "time": time })
         // Clear input area
@@ -49,18 +54,19 @@ document.addEventListener('DOMContentLoaded', () => {
         p.onclick = () => {
             let newRoom = p.innerHTML
             if (newRoom == current_room) {
-                msg = `You are already in ${current_room} room.`
+                const msg = `You are already in ${current_room} room.`
                 printSysMsg(msg)
             } else {
                 leaveRoom(current_room)
                 joinRoom(newRoom)
-                current_room = newRoom
             }
         }
     }
 
     // Room selection
-    document.querySelectorAll(".room").forEach(p => handleRoomClick(p))
+    document.querySelectorAll(".room").forEach(p => {
+        handleRoomClick(p)
+    })
 
     // Add room to the DOM
     socket.on("room added", new_room => {
@@ -68,11 +74,15 @@ document.addEventListener('DOMContentLoaded', () => {
         p.innerHTML = new_room
         p.className = "room"
         handleRoomClick(p)
-        document.querySelector("#room_list").append(p)
+        document.querySelector("#room_list").prepend(p)
     })
 
     // Join user after room creation
-    socket.on("room creator", room => joinRoom(room))
+    socket.on("room creator", room => {
+        leaveRoom(current_room)
+        joinRoom(room)
+    })
+    
 
     // Handles the printing of messages when they come from server-side
     const sendMessage = data => {
@@ -105,6 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.emit("join", {"username": username, "room": room})
 
         // Set localStorage room 
+        current_room = room
         localStorage.setItem('current_room', room)
 
         // Clear message area
@@ -124,5 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         p.innerHTML = msg
         document.querySelector("#display-messages-section").append(p)
     }
+
 })
 

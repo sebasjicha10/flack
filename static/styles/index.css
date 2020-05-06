@@ -1,0 +1,119 @@
+body {
+  width: 100vw;
+  height: 100vh;
+}
+body main {
+  width: 100%;
+  height: 100%;
+}
+body main .container-fluid {
+  border: 1px solid blue;
+  width: 100%;
+  height: 100%;
+}
+body main .container-fluid #header {
+  background-color: lightsalmon;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 45px;
+}
+body main .container-fluid #header #flack-logo-black {
+  width: 90px;
+}
+body main .container-fluid #header .header-name {
+  align-self: flex-end;
+  padding: 0px 5px 5px 0px;
+  font-family: "Comfortaa", cursive;
+}
+body main .container-fluid #header #helper {
+  visibility: hidden;
+}
+body main .container-fluid #main-section {
+  border: 1px solid red;
+  height: calc(100% - 45px);
+}
+body main .container-fluid #main-section #rooms {
+  background-color: lightyellow;
+  padding: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+body main .container-fluid #main-section #rooms #available-rooms {
+  font-size: 18px;
+  margin-top: 25px;
+  font-family: "Comfortaa", cursive;
+  font-weight: bold;
+}
+body main .container-fluid #main-section #rooms #new_room_form {
+  min-height: 100px;
+  height: 15%;
+  border: 1px solid red;
+}
+body main .container-fluid #main-section #rooms #new_room_form #new_room {
+  border-radius: 25px;
+  padding: 3px 10px;
+  width: 80%;
+  margin-right: 0px;
+  border: 2px solid;
+}
+body main .container-fluid #main-section #rooms #new_room_form #add_room {
+  border: 2px solid;
+  border-radius: 15px;
+  position: absolute;
+  margin-left: 5px;
+  margin-top: 2px;
+}
+body main .container-fluid #main-section #rooms #new_room_form #add_room:hover {
+  opacity: 0.7;
+}
+body main .container-fluid #main-section #rooms #room_list_area {
+  border: 1px solid purple;
+  height: 70%;
+  overflow: auto;
+}
+body main .container-fluid #main-section #rooms #room_list_area #room_list {
+  padding: 0;
+}
+body main .container-fluid #main-section #rooms #room_list_area #room_list .room {
+  font-size: 16px;
+  font-family: "Comfortaa", cursive;
+}
+body main .container-fluid #main-section #rooms #day-night-area {
+  border: 1px solid black;
+  height: 10%;
+}
+body main .container-fluid #main-section #chat {
+  background-color: lightgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+body main .container-fluid #main-section #chat #room_name_area {
+  border: 1px solid black;
+  height: 10%;
+}
+body main .container-fluid #main-section #chat #room_name_area #room_name {
+  font-size: 18px;
+  margin-top: 25px;
+  font-family: "Comfortaa", cursive;
+  font-weight: bold;
+}
+body main .container-fluid #main-section #chat #messages_area {
+  width: 100%;
+  border: 1px solid green;
+  height: 75%;
+  overflow: auto;
+}
+body main .container-fluid #main-section #chat #messages_area #display-messages-section {
+  border: 1px solid red;
+}
+body main .container-fluid #main-section #chat #input-area {
+  border: 1px solid blue;
+  height: 10%;
+}
+
+/*# sourceMappingURL=index.css.map */

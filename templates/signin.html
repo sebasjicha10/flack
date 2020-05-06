@@ -5,17 +5,23 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="{{ url_for('static', filename='signin.js') }}" type="text/javascript" charset="utf-8"></script>
+
+        <link href="/static/styles/signin.css" rel="stylesheet">
+
+        <script src="{{ url_for('static', filename='script/signin.js') }}" type="text/javascript" charset="utf-8"></script>
     </head>
     
     <body>
-        <h1>Provide a Name</h1>
-        <!-- Sign in form -->
-        <form action="/signin" id="siginForm" method="post">
-            <input autocomplete="off" type="text" name="name" id="username" placeholder="Username">
-            <button id="singinSubmitButton" type="submit">Submit</button>
-        </form>
-        <!-- MAKE APPEAR WITH JS WHEN USER > 25 chars -->
-        <p>25 character limit</p>
+        <div class="containter-fluid">
+            <!-- Flack logo -->
+            <img id="flack-logo-green" class="img-fluid" src="../static/images/flack_green.png" alt="Flack logo">
+            <!-- Sign in form -->
+            <h1 id="provide-name">Please provide a name</h1>
+            <form action="/signin" id="siginForm" method="post">
+                <input autocomplete="off" type="text" name="name" id="username" placeholder="Name">
+                <p id="char-limit">Your name can't be longer than 25 characters</p>
+                <button id="singinSubmitButton" type="submit">Submit</button>
+            </form>
+        </div>
     </body>
 </html>
