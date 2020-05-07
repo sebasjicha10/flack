@@ -7,7 +7,6 @@ body {
         width: 100%;
         height: 100%;
         .container-fluid {
-            border: 1px solid blue;
             width: 100%;
             height: 100%;
             // Header Area
@@ -33,10 +32,9 @@ body {
             }
             // Main Section
             #main-section {
-                border: 1px solid red;
                 height: calc(100% - 45px);
                 #rooms {
-                    background-color: lightyellow;
+                    background-color: #D1F2F0;
                     padding: 0px 10px;
                     display: flex;
                     flex-direction: column;
@@ -44,30 +42,28 @@ body {
                     height: 100%;
                     #available-rooms {
                         font-size: 18px;
-                        margin-top: 25px;
                         font-family: $flack-font;
                         font-weight: bold;
+                        margin-top: 15px;
                     }
                     // Add New Room Form
                     #new_room_form {
                         min-height: 100px;
                         height: 15%;
-                        border: 1px solid red;
                         #new_room {
+                            margin-top: 25px;
                             border-radius: 25px;
                             padding: 3px 10px;
                             width: 80%;
                             margin-right: 0px;
                             border: 2px solid;
-                          
                         }
                         #add_room {
                             border: 2px solid;
                             border-radius: 15px;
                             position: absolute;
                             margin-left: 5px;
-                            margin-top: 2px;
-                
+                            margin-top: 27px; // 25 + 2 center
                         }
                         #add_room:hover {
                             opacity: 0.7;
@@ -75,7 +71,6 @@ body {
                     }
                     // List of Rooms
                     #room_list_area {
-                        border: 1px solid purple;
                         height: 70%;
                         overflow: auto;
                         #room_list {
@@ -84,14 +79,84 @@ body {
                                 font-size: 16px;
                                 font-family: $flack-font;
                             }
+                            .room:hover {
+                                opacity: 0.8;
+                                cursor: pointer;
+                            }
                         }
                     }
                     // Day-night Switch area
                     #day-night-area {
-                        border: 1px solid black;
                         height: 10%;
+                        text-align: center;
+                        /* The switch - the box around the slider */
+                        .switch {
+                            position: relative;
+                            display: inline-block;
+                            width: 60px;
+                            height: 34px;
+                        }
+                        /* Hide default HTML checkbox */
+                        .switch input {
+                            opacity: 0;
+                            width: 0;
+                            height: 0;
+                        }
+                        /* The slider */
+                        .slider {
+                            position: absolute;
+                            cursor: pointer;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            background-color: white;
+                            -webkit-transition: .4s;
+                            transition: .4s;
+                        }
+                        .slider:before {
+                            position: absolute;
+                            content: "";
+                            height: 26px;
+                            width: 26px;
+                            left: 4px;
+                            bottom: 4px;
+                            background-color: white;
+                            border: 2px solid red;
+                            -webkit-transition: .4s;
+                            transition: .4s;
+                        }
+                        input:checked + .slider {
+                            background-color: black;
+                        }
+                        input:checked + .slider:before {
+                            -webkit-transform: translateX(26px);
+                            -ms-transform: translateX(26px);
+                            transform: translateX(26px);
+                            background-color: black;
+                        }
+                        /* Rounded sliders */
+                        .slider.round {
+                            border-radius: 34px;
+                        }
+                        .slider.round:before {
+                            border-radius: 50%;
+                        }
+                        .icon {
+                            position: relative;
+                            top: 5px;
+                        }
+                        #sun {
+                            right: 2px;
+                            color: #E1DA14;
+                        }
+                        #moon {
+                            left: 2px;
+                            color: #1480DF;
+                        }
                     }
                 }
+                // Chat Area
                 #chat {
                     background-color: lightgray;
                     display: flex;
@@ -99,33 +164,120 @@ body {
                     justify-content: space-between;
                     height: 100%;
                     #room_name_area {
-                        border: 1px solid black;
                         height: 10%;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: flex-end;
                         #room_name {
                             font-size: 18px;
-                            margin-top: 25px;
                             font-family: $flack-font;
                             font-weight: bold;
+                            margin-bottom: 0;
                         }
                     }
                     #messages_area {
                         width: 100%;
-                        border: 1px solid green;
+                        border-radius: 25px;
+                        background-color: white;
                         height: 75%;
                         overflow: auto;
+                        padding: 0px 20px 0px 20px;
                         #display-messages-section {
-                            border: 1px solid red;
+                            margin-top: 20px;
+                            padding: 0px;
+                            // General Styling of text messages
+                            %messages_box {
+                                margin-bottom: 10px;
+                            }
+                            %messages_message {
+                                border-radius: 10px;
+                                display: inline-block;
+                                max-width: 50%;
+                                background-color: lightyellow;
+                                padding: 10px;
+                                font-size: 14px;
+                                font-family: $flack-font;
+                                font-weight: bold;
+                                margin-bottom: 0px;
+                            }
+                            %messages_time {
+                                float: right;
+                                margin-left: 20px;
+                                font-size: 10px;
+                                font-family: Arial, Helvetica, sans-serif;
+                                padding-top: 4px;
+                            }
+                            %messages_text {
+                                font-weight: normal;
+                                font-family: Arial, Helvetica, sans-serif;
+                            }
+                            // Others Messages
+                            .others_box {
+                                @extend %messages_box;
+                            }
+                            .others_name {
+                                color: black
+                            }
+                            .others_message {
+                                @extend %messages_message;
+                            }
+                            .others_time {
+                                @extend %messages_time;
+                            }
+                            .others_text {
+                                @extend %messages_text;
+                            }
+                            // Own user messages
+                            .own_box {
+                                @extend %messages_box;
+                                text-align: right;
+                            }
+                            .own_name {
+                                color: brown;
+                            }
+                            .own_message {
+                                @extend %messages_message;
+                                text-align: left;
+                                background-color: lightgreen;
+                            }
+                            .own_time {
+                                @extend %messages_time;
+                            }
+                            .own_text {
+                                @extend %messages_text;
+                            }
                         }
                     }
+                    // Message Input Area
                     #input-area {
-                        border: 1px solid blue;
                         height: 10%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        #message {
+                            width: 96%;
+                            border: 2px solid;
+                            border-radius: 25px;
+                            padding: 3px 10px;
+                            
+                        }
+                        #send_button {
+                            text-align: right;
+                            #send_message {
+                                border: 2px solid;
+                                border-radius: 15px;
+                                margin-left: 5px;
+                                margin-top: 2px;
+                       
+                            }
+                           #send_message:hover {
+                                opacity: 0.7;
+                            }
+                        }
                     }
-
                 }
             }
-
-
         }
     }
 }

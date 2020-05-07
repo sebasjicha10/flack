@@ -6,7 +6,7 @@ if (!localStorage.getItem('username'))
 
 
 // Global variables
-const username = localStorage.getItem('username')
+const USERNAME = localStorage.getItem('username')
 let current_room = localStorage.getItem('current_room') || ""
 
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Attach username to page
     document.querySelectorAll('.username').forEach(element => {
-        element.innerHTML = username
+        element.innerHTML = USERNAME
     })
 
     // Connect to websocket
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector("#send_message").onclick = () => {
         const time = new Date().toLocaleTimeString()
         const promptedMessage = document.querySelector("#message")
-        socket.send({ "msg": promptedMessage.value, "username": username, "room": current_room, "time": time })
+        socket.send({ "msg": promptedMessage.value, "username": USERNAME, "room": current_room, "time": time })
         // Clear input area
         promptedMessage.value = ""
     }
@@ -86,14 +86,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handles the printing of messages when they come from server-side
     const sendMessage = data => {
+        const box = document.createElement('div')
         const p = document.createElement('p')
+        const messsa_area = document.querySelector("#messages_area")
+        const br = document.createElement('br') 
         const span_user = document.createElement('span') 
         const span_time = document.createElement('span') 
-        const br = document.createElement('br')
+        const span_message = document.createElement('span') 
+
+        box.appendChild(p)
+
+        if (data.username ===  USERNAME) {
+            box.classList.add("own_box")
+            p.classList.add("own_message")
+            span_time.classList.add("own_time")
+            span_message.classList.add("own_text")
+            span_user.classList.add("own_name")
+        } else {
+            box.classList.add("others_box")
+            p.classList.add("others_message")
+            span_time.classList.add("others_time")
+            span_message.classList.add("others_text")
+            span_user.classList.add("others_name")
+        }
+
         span_user.innerHTML = data.username
         span_time.innerHTML = data.time
-        p.innerHTML = span_user.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_time.outerHTML
-        document.querySelector("#display-messages-section").append(p)
+        span_message.innerHTML = data.msg
+        p.innerHTML = span_user.outerHTML + span_time.outerHTML + br.outerHTML + span_message.outerHTML
+
+        document.querySelector("#display-messages-section").append(box)
+        // Show from bottom to top
+        messsa_area.scrollTop = messsa_area.scrollHeight;
     }
 
     // Print all messages registered in the room 
@@ -103,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Leave room
     const leaveRoom = room => {
-        socket.emit("leave", {"username": username, "room": room})
+        socket.emit("leave", {"username": USERNAME, "room": room})
     }
 
     // Join room
@@ -112,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fetch messages
         socket.emit("fetch messages", room)
 
-        socket.emit("join", {"username": username, "room": room})
+        socket.emit("join", {"username": USERNAME, "room": room})
 
         // Set localStorage room 
         current_room = room

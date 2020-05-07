@@ -45,9 +45,9 @@
                     <div id="rooms" class="col-2">
                         <!-- Room Creation form -->
                         <div id="new_room_form">
-                            <h2 id="available-rooms">Available Rooms</h2>
                             <input autocomplete="off" type="text" name="new_room" id="new_room" placeholder="Add New Room">
                             <button id="add_room" type="button"><i class="fas fa-plus"></i></button>
+                            <h2 id="available-rooms">Available Rooms</h2>
                         </div>
                         <div id="room_list_area">
                             <!-- List of Rooms -->
@@ -58,24 +58,32 @@
                             </ul>
                         </div>
                         <div id="day-night-area">
-                            Day - Night
+                            <!-- Rounded switch -->
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round">
+                                    <i id="sun" class="fas fa-sun icon"></i>
+                                    <i id="moon" class="fas fa-moon icon"></i>
+                                </span>
+                            </label>
                         </div>
                     </div>
                     <div id="chat" class="col-10">
                         <!-- Messages -->
-
                         <div id="room_name_area">
                             <h2 id="room_name"></h2>
+                            <div></div>
                         </div>
-                        
                         <div id="messages_area">
                             <div id="display-messages-section">
                             </div>
                         </div>
-
+                        <!-- Messages Input -->
                         <div id="input-area">
                             <input type="text" id="message" placeholder="Type here..." autocomplete="off">
-                            <button type="button" id="send_message">SEND</button> 
+                            <div id="send_button">
+                                <button type="button" id="send_message"><i class="fas fa-paper-plane"></i></button> 
+                            </div>
                         </div>
 
                     </div>
