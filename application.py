@@ -53,14 +53,15 @@ def signin():
 @socketio.on("message")
 def message(data):
     """Send messages to the Client-Side"""
-
+    
     print(data)
 
     # Store message
     room_name = data["room"]
     msg = data["msg"].strip()
 
-    print(data)
+    if room_name == "":
+        pass 
 
     # Make sure something was typed
     if msg == "":
@@ -77,6 +78,8 @@ def message(data):
             messages.append(data)
             
     # Signal client side 
+
+    print(ROOMS)
     send(data, room=room_name)
 
 
@@ -145,5 +148,5 @@ def fetch(room_name):
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app)
 

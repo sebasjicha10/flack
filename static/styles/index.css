@@ -11,7 +11,6 @@ body main .container-fluid {
   height: 100%;
 }
 body main .container-fluid #header {
-  background-color: lightsalmon;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -32,7 +31,6 @@ body main .container-fluid #main-section {
   height: calc(100% - 45px);
 }
 body main .container-fluid #main-section #rooms {
-  background-color: #D1F2F0;
   padding: 0px 10px;
   display: flex;
   flex-direction: column;
@@ -44,6 +42,7 @@ body main .container-fluid #main-section #rooms #available-rooms {
   font-family: "Comfortaa", cursive;
   font-weight: bold;
   margin-top: 15px;
+  color: black;
 }
 body main .container-fluid #main-section #rooms #new_room_form {
   min-height: 100px;
@@ -77,6 +76,7 @@ body main .container-fluid #main-section #rooms #room_list_area #room_list {
 body main .container-fluid #main-section #rooms #room_list_area #room_list .room {
   font-size: 16px;
   font-family: "Comfortaa", cursive;
+  color: black;
 }
 body main .container-fluid #main-section #rooms #room_list_area #room_list .room:hover {
   opacity: 0.8;
@@ -120,7 +120,7 @@ body main .container-fluid #main-section #rooms #day-night-area .slider:before {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  border: 2px solid red;
+  border: 2px solid #41B3A3;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -144,15 +144,14 @@ body main .container-fluid #main-section #rooms #day-night-area .icon {
   top: 5px;
 }
 body main .container-fluid #main-section #rooms #day-night-area #sun {
-  right: 2px;
+  right: 3px;
   color: #E1DA14;
 }
 body main .container-fluid #main-section #rooms #day-night-area #moon {
-  left: 2px;
+  left: 3px;
   color: #1480DF;
 }
 body main .container-fluid #main-section #chat {
-  background-color: lightgray;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -173,7 +172,6 @@ body main .container-fluid #main-section #chat #room_name_area #room_name {
 body main .container-fluid #main-section #chat #messages_area {
   width: 100%;
   border-radius: 25px;
-  background-color: white;
   height: 75%;
   overflow: auto;
   padding: 0px 20px 0px 20px;
@@ -185,11 +183,10 @@ body main .container-fluid #main-section #chat #messages_area #display-messages-
 body main .container-fluid #main-section #chat #messages_area #display-messages-section .own_box, body main .container-fluid #main-section #chat #messages_area #display-messages-section .others_box {
   margin-bottom: 10px;
 }
-body main .container-fluid #main-section #chat #messages_area #display-messages-section .own_message, body main .container-fluid #main-section #chat #messages_area #display-messages-section .others_message {
+body main .container-fluid #main-section #chat #messages_area #display-messages-section .join_leave_message, body main .container-fluid #main-section #chat #messages_area #display-messages-section .own_message, body main .container-fluid #main-section #chat #messages_area #display-messages-section .others_message {
   border-radius: 10px;
   display: inline-block;
   max-width: 50%;
-  background-color: lightyellow;
   padding: 10px;
   font-size: 14px;
   font-family: "Comfortaa", cursive;
@@ -207,18 +204,56 @@ body main .container-fluid #main-section #chat #messages_area #display-messages-
   font-weight: normal;
   font-family: Arial, Helvetica, sans-serif;
 }
+body main .container-fluid #main-section #chat #messages_area #display-messages-section .others_message {
+  background-color: #E8A87C;
+}
 body main .container-fluid #main-section #chat #messages_area #display-messages-section .others_name {
-  color: black;
+  color: #F8F8F8;
 }
 body main .container-fluid #main-section #chat #messages_area #display-messages-section .own_box {
   text-align: right;
 }
-body main .container-fluid #main-section #chat #messages_area #display-messages-section .own_name {
-  color: brown;
-}
 body main .container-fluid #main-section #chat #messages_area #display-messages-section .own_message {
   text-align: left;
-  background-color: lightgreen;
+  background-color: #D1F2F0;
+}
+body main .container-fluid #main-section #chat #messages_area #display-messages-section .own_time {
+  color: #2B2A2A;
+}
+body main .container-fluid #main-section #chat #messages_area #display-messages-section .own_name {
+  color: #41B3A3;
+}
+@keyframes myAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+    height: 0px;
+    margin-bottom: 0px;
+  }
+}
+body main .container-fluid #main-section #chat #messages_area #display-messages-section .join_leave_box {
+  animation-name: myAnimation;
+  animation-duration: 2500ms;
+  animation-fill-mode: forwards;
+  text-align: center;
+}
+body main .container-fluid #main-section #chat #messages_area #display-messages-section .join_leave_message {
+  text-align: center;
+  background-color: #D1F2F0;
+  opacity: 0.7;
+  padding: 5px;
+}
+body main .container-fluid #main-section #chat #messages_area #display-messages-section .alreadyIn_message {
+  animation-name: myAnimation;
+  animation-duration: 2500ms;
+  animation-fill-mode: forwards;
+  text-align: center;
 }
 body main .container-fluid #main-section #chat #input-area {
   height: 10%;
@@ -244,6 +279,13 @@ body main .container-fluid #main-section #chat #input-area #send_button #send_me
 }
 body main .container-fluid #main-section #chat #input-area #send_button #send_message:hover {
   opacity: 0.7;
+}
+
+/* Hanlde add Room button overlap */
+@media (max-width: 900px) {
+  #add_room {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */

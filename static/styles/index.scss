@@ -11,7 +11,6 @@ body {
             height: 100%;
             // Header Area
             #header {
-                background-color: lightsalmon;
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
@@ -34,7 +33,6 @@ body {
             #main-section {
                 height: calc(100% - 45px);
                 #rooms {
-                    background-color: #D1F2F0;
                     padding: 0px 10px;
                     display: flex;
                     flex-direction: column;
@@ -45,6 +43,7 @@ body {
                         font-family: $flack-font;
                         font-weight: bold;
                         margin-top: 15px;
+                        color: black;
                     }
                     // Add New Room Form
                     #new_room_form {
@@ -78,6 +77,7 @@ body {
                             .room {
                                 font-size: 16px;
                                 font-family: $flack-font;
+                                color: black;
                             }
                             .room:hover {
                                 opacity: 0.8;
@@ -122,7 +122,7 @@ body {
                             left: 4px;
                             bottom: 4px;
                             background-color: white;
-                            border: 2px solid red;
+                            border: 2px solid #41B3A3;
                             -webkit-transition: .4s;
                             transition: .4s;
                         }
@@ -147,18 +147,17 @@ body {
                             top: 5px;
                         }
                         #sun {
-                            right: 2px;
+                            right: 3px;
                             color: #E1DA14;
                         }
                         #moon {
-                            left: 2px;
+                            left: 3px;
                             color: #1480DF;
                         }
                     }
                 }
                 // Chat Area
                 #chat {
-                    background-color: lightgray;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
@@ -178,7 +177,6 @@ body {
                     #messages_area {
                         width: 100%;
                         border-radius: 25px;
-                        background-color: white;
                         height: 75%;
                         overflow: auto;
                         padding: 0px 20px 0px 20px;
@@ -193,7 +191,6 @@ body {
                                 border-radius: 10px;
                                 display: inline-block;
                                 max-width: 50%;
-                                background-color: lightyellow;
                                 padding: 10px;
                                 font-size: 14px;
                                 font-family: $flack-font;
@@ -215,11 +212,9 @@ body {
                             .others_box {
                                 @extend %messages_box;
                             }
-                            .others_name {
-                                color: black
-                            }
                             .others_message {
                                 @extend %messages_message;
+                                background-color: #E8A87C;
                             }
                             .others_time {
                                 @extend %messages_time;
@@ -227,24 +222,63 @@ body {
                             .others_text {
                                 @extend %messages_text;
                             }
+                            .others_name {
+                                color: #F8F8F8;
+                            }
                             // Own user messages
                             .own_box {
                                 @extend %messages_box;
                                 text-align: right;
                             }
-                            .own_name {
-                                color: brown;
-                            }
                             .own_message {
                                 @extend %messages_message;
                                 text-align: left;
-                                background-color: lightgreen;
+                                background-color: #D1F2F0;
                             }
                             .own_time {
                                 @extend %messages_time;
+                                color: #2B2A2A;
                             }
                             .own_text {
                                 @extend %messages_text;
+                            }
+                            .own_name {
+                                color: #41B3A3;
+                            }
+                            // Join - Leave messages
+                            @keyframes myAnimation{
+                                0%{
+                                  opacity: 1;
+                                }
+                                50%{
+                                  opacity: 0.5;
+                                }
+                                100%{
+                                  display: none;
+                                  opacity: 0;
+                                  height: 0px;
+                                  margin-bottom: 0px;
+                
+                                }
+                              }
+                            .join_leave_box {
+                                animation-name: myAnimation;
+                                animation-duration: 2500ms;
+                                animation-fill-mode: forwards;
+                                text-align: center;                   
+                            }
+                            .join_leave_message {
+                                @extend %messages_message;
+                                text-align: center;
+                                background-color: #D1F2F0;  
+                                opacity: 0.7;     
+                                padding: 5px;        
+                            }
+                            .alreadyIn_message {
+                                animation-name: myAnimation;
+                                animation-duration: 2500ms;
+                                animation-fill-mode: forwards;
+                                text-align: center;     
                             }
                         }
                     }
@@ -269,7 +303,6 @@ body {
                                 border-radius: 15px;
                                 margin-left: 5px;
                                 margin-top: 2px;
-                       
                             }
                            #send_message:hover {
                                 opacity: 0.7;
@@ -282,3 +315,9 @@ body {
     }
 }
 
+/* Hanlde add Room button overlap */
+@media (max-width: 900px)  {
+    #add_room {
+        display: none;
+    }
+}

@@ -2,6 +2,9 @@
 <html>
     <head>
         <title>Flack</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
         <!-- Socket.io -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
 
@@ -37,7 +40,7 @@
                         <!-- Not displayed, used to center header -->
                         <div id="helper" class="username header-name"></div>
                         <img id="flack-logo-black" class="img-fluid" src="../static/images/flack-black.png" alt="Flack logo">
-                        <div class="username header-name"></div>
+                        <div id="header_name" class="username header-name"></div>
                     </div>
                 </div>
                 <!-- Chat Area -->
@@ -45,8 +48,8 @@
                     <div id="rooms" class="col-2">
                         <!-- Room Creation form -->
                         <div id="new_room_form">
-                            <input autocomplete="off" type="text" name="new_room" id="new_room" placeholder="Add New Room">
-                            <button id="add_room" type="button"><i class="fas fa-plus"></i></button>
+                            <input class="borders" autocomplete="off" type="text" name="new_room" id="new_room" placeholder="Add New Room">
+                            <button class="borders" id="add_room" type="button"><i id="plus_button" class="fas fa-plus"></i></button>
                             <h2 id="available-rooms">Available Rooms</h2>
                         </div>
                         <div id="room_list_area">
@@ -60,7 +63,7 @@
                         <div id="day-night-area">
                             <!-- Rounded switch -->
                             <label class="switch">
-                                <input type="checkbox">
+                                <input id="switch" type="checkbox">
                                 <span class="slider round">
                                     <i id="sun" class="fas fa-sun icon"></i>
                                     <i id="moon" class="fas fa-moon icon"></i>
@@ -80,12 +83,11 @@
                         </div>
                         <!-- Messages Input -->
                         <div id="input-area">
-                            <input type="text" id="message" placeholder="Type here..." autocomplete="off">
+                            <input class="borders" type="text" id="message" placeholder="Type here..." autocomplete="off">
                             <div id="send_button">
-                                <button type="button" id="send_message"><i class="fas fa-paper-plane"></i></button> 
+                                <button class="borders" type="button" id="send_message"><i id="send_plane" class="fas fa-paper-plane"></i></button> 
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
