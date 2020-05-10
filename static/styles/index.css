@@ -281,11 +281,4 @@ body main .container-fluid #main-section #chat #input-area #send_button #send_me
   opacity: 0.7;
 }
 
-/* Hanlde add Room button overlap */
-@media (max-width: 900px) {
-  #add_room {
-    display: none;
-  }
-}
-
 /*# sourceMappingURL=index.css.map */

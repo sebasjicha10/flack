@@ -314,10 +314,3 @@ body {
         }
     }
 }
-
-/* Hanlde add Room button overlap */
-@media (max-width: 900px)  {
-    #add_room {
-        display: none;
-    }
-}
